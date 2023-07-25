@@ -1,0 +1,67 @@
+.page {
+  background-color: #e6e6e6;
+  padding: 20px;
+}
+
+.page__box {
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page__link {
+  margin: 40px auto;
+  padding: 20px;
+  display: block;
+  background-color: #fff;
+  border: 1px solid #22b24c;
+  color: #22b24c;
+  width: 160px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.header {
+  background-color: #333;
+}
+
+.header__nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+.header__link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.check {
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.check__h2 {
+  text-align: center;
+}
+
+.inputTextBox__textArea {
+  margin: 20px auto;
+  display: block;
+  width: 80%;
+  max-width: 800px;
+}
+
+.inputTextBox__btn {
+  margin: 40px auto;
+  padding: 20px;
+  display: block;
+  background-color: #fff;
+  border: 1px solid #22b24c;
+  color: #22b24c;
+  width: 160px;
+  text-align: center;
+  text-decoration: none;
+}
