@@ -2,14 +2,28 @@
 
 import { useState } from "react";
 
-export default function InputText(todo: any) {
-  console.log("todo", todo);
+export type TResText = {
+  alerts: {
+    pos: number;
+    score: number;
+    suggestions: string[];
+    word: string;
+  }[];
+  checkedSentence: string;
+  inputSentence: string;
+  message: string;
+  normalizedSentence: string;
+  resultID: string;
+  status: number;
+};
 
+export default function InputText() {
   const [sarchText, setSarchText] = useState("");
-  const [resText, setResText] = useState<any>();
+  const [resText, setResText] = useState<TResText>();
   console.log(resText);
 
   const submitHandler = async (text: string) => {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     const res = await fetch(
       `https://api.a3rt.recruit.co.jp/proofreading/v2/typo?apikey=${process.env.NEXT_PUBLIC_API_URL}&sentence=${text}`,
       {
@@ -42,10 +56,11 @@ export default function InputText(todo: any) {
       >
         添削する
       </button>
+
       <h4>入力した文章</h4>
       <p>{resText?.inputSentence}</p>
       <div>
-        {resText?.alerts.map((alert: any, index: number) => (
+        {resText?.alerts?.map((alert, index) => (
           <div key={index}>
             <h4>間違えている箇所</h4>
             <p>{alert.word}</p>
