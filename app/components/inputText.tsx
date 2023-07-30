@@ -19,11 +19,13 @@ export type TResText = {
 
 export default function InputText() {
   const [sarchText, setSarchText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [resText, setResText] = useState<TResText>();
   console.log(resText);
 
   const submitHandler = async (text: string) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setIsLoading(true);
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
     const res = await fetch(
       `https://api.a3rt.recruit.co.jp/proofreading/v2/typo?apikey=${process.env.NEXT_PUBLIC_API_URL}&sentence=${text}`,
       {
@@ -32,10 +34,11 @@ export default function InputText() {
       }
     );
     if (!res.ok) {
-      throw new Error("Failed to fetch data in server");
+      alert("エラー。文字数が多過ぎかもしれません。");
     }
     const resText = await res.json();
     setResText(resText);
+    setIsLoading(false);
   };
 
   return (
@@ -56,21 +59,36 @@ export default function InputText() {
       >
         添削する
       </button>
+      <p>
+        間違えているかもしれない箇所は&lt;&lt;指摘文字&gt;&gt;のようにカッコで囲まれています。
+      </p>
 
-      <h4>入力した文章</h4>
-      <p>{resText?.inputSentence}</p>
-      <div>
-        {resText?.alerts?.map((alert, index) => (
-          <div key={index}>
-            <h4>間違えている箇所</h4>
-            <p>{alert.word}</p>
-            <h4>候補</h4>
-            {alert.suggestions.map((suggestion: any, index: number) => (
-              <p key={index}>{suggestion}</p>
-            ))}
-          </div>
-        ))}
-      </div>
+      <p>
+        例<br />
+        明日&lt;&lt;わ&gt;&gt;、晴れです。
+      </p>
+      {isLoading ? (
+        <p>添削中...</p>
+      ) : (
+        resText !== undefined && (
+          <>
+            <h3>入力した文章</h3>
+            <p>{resText?.checkedSentence}</p>
+            <div>
+              {resText?.alerts?.map((alert, index) => (
+                <div className="wrongPartBox" key={index}>
+                  <h4>間違えているかも？</h4>
+                  <p>{alert.word}</p>
+                  <h4>修正候補</h4>
+                  {alert.suggestions.map((suggestion: any, index: number) => (
+                    <p key={index}>{suggestion}</p>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </>
+        )
+      )}
     </div>
   );
 }
