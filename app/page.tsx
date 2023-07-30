@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <main className="page">
       <div className="page__box">
-        <h1 style={{ margin: "0" }}>文章チェックアプリ</h1>
+        <h1 style={{ margin: "0", textAlign: "center" }}>文章チェックアプリ</h1>
         <h2>説明</h2>
         <p>
           機械学習を用いて、大量の日本語文章データから正しい文章の構成や文法、単語の流れを学習し、異常検知的に誤字脱字を発見するwebアプリです。
